@@ -1,0 +1,42 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "root"
+    },
+    {
+      "path": "src"
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.diagnosticSeverityOverrides": {
+      "reportMissingModuleSource": "none"
+    },
+    "python.analysis.typeshedPaths": ["~/.micropico-stubs/included"],
+    "python.analysis.extraPaths": ["~/.micropico-stubs/included"],
+    "python.terminal.activateEnvironment": false,
+    "micropico.openOnStart": true,
+    "micropico.syncFolder": "src",
+    "micropico.autoConnect": true,
+    "micropico.statusbarButtons": [
+      "status",
+      "run",
+      "softreset",
+      "togglepicowfs",
+      "upload",
+      "uploadproject"
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-ceintl.vscode-language-pack-ja",
+      "esbenp.prettier-vscode",
+      "ms-python.python",
+      "ms-python.vscode-pylance",
+      "paulober.pico-w-go"
+    ]
+  }
+}

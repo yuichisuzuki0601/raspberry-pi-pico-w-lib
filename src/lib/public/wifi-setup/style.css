@@ -1,0 +1,46 @@
+html {
+  font-family: sans-serif;
+}
+
+body {
+  background: #f1f1f1;
+  padding: 30px;
+  text-align: center;
+}
+
+.line {
+  padding: 10px;
+}
+
+.label {
+  padding: 8px;
+  text-align: left;
+}
+
+.space-50 {
+  height: 50px;
+}
+
+input {
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  height: 50px;
+  width: 100%;
+  padding: 10px;
+}
+
+button {
+  background: #007ab7;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  width: 80%;
+  height: 50px;
+}
+
+button[disabled] {
+  background: #9acde7;
+  cursor: not-allowed;
+}
