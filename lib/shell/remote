@@ -1,0 +1,29 @@
+KEY_FILE=~/.ssh/xxx
+STG_ADDRESS=staging.xxx.com
+STG_USER=xxx
+PROD_ADDRESS=xxx.com
+PROD_USER=xxx
+
+function staging:ssh() {
+    ssh -i $KEY_FILE -l $STG_USER -p 22 $STG_ADDRESS $1
+}
+
+function staging:scp() {
+    scp -i $KEY_FILE -P 22 -p -r $1 $STG_USER@$STG_ADDRESS:$2
+}
+
+function staging:rsync() {
+    rsync -hlprtvz --delete -e "ssh -i ${KEY_FILE} -p 22" $1 $STG_USER@$STG_ADDRESS:$2 
+}
+
+function prod:ssh() {
+    ssh -i $KEY_FILE -l $PROD_USER -p 22 $PROD_ADDRESS $1
+}
+
+function prod:scp() {
+    scp -i $KEY_FILE -P 22 -p -r $1 $PROD_USER@$PROD_ADDRESS:$2
+}
+
+function prod:rsync() {
+    rsync -hlprtvz --delete -e "ssh -i ${KEY_FILE} -p 22" $1 $PROD_USER@$PROD_ADDRESS:$2 
+}

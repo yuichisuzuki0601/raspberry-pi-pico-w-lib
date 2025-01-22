@@ -1,11 +1,11 @@
 #!/bin/sh
 
 if [ -z "$1" ]; then
-  echo -e "usase:\n \t$0 <command>"
-  echo ""
-  echo "commands:"
-  cat `basename $0` | grep "^function" | sed -e "s/function /\t/g" | sed -e "s/[\(|\)|{]//g"
-  echo ""
+    echo -e "usase:\n \t$0 <command>"
+    echo ""
+    echo "commands:"
+    cat `basename $0` | grep "^function" | sed -e "s/function /\t/g" | sed -e "s/[\(|\)|{]//g"
+    echo ""
 else
-  $1 $2 $3 $4 $5
+    $1 $2 $3 $4 $5
 fi

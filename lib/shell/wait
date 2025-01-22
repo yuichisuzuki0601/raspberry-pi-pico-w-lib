@@ -1,0 +1,11 @@
+function wait() {
+    echo -n please waiting 
+    timer=1
+    while [ "$timer" -le $1 ]
+    do
+        sleep 1
+        echo -n .
+        timer=$((timer+1))
+    done
+    echo
+}
