@@ -3,7 +3,7 @@ from machine import Pin, PWM
 from board.pin_layout import to_gpio_number
 
 class Tb67h45:
-    DEFAULT_SPEED = 50#[%]
+    DEFAULT_SPEED = int(65536 * (50 / 100))
 
     def __init__(self, pin1Number, pin2Number):
         self.pin1 = PWM(Pin(to_gpio_number(pin1Number), Pin.OUT), 60000)
@@ -13,7 +13,7 @@ class Tb67h45:
         fix = self.pin1 if reverse else self.pin2
         pwm = self.pin2 if reverse else self.pin1
         fix.duty_u16(65536)
-        pwm.duty_u16(int(65536 * (1 - speed / 100)))
+        pwm.duty_u16(65536 - speed)
 
     def stop(self):
         self.pin1.duty_u16(65536)
