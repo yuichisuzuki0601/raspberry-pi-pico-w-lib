@@ -6,7 +6,7 @@ from board.pin_layout import to_gpio_number
 class Led:
     FLASH_TIME_MS = 100#[ms]
 
-    def __init__(self, name, pinNumber):
+    def __init__(self, name: str, pinNumber):
         self.name = name
         id = 'LED' if pinNumber == 'LED' else to_gpio_number(pinNumber)
         self.pin = Pin(id, Pin.OUT)

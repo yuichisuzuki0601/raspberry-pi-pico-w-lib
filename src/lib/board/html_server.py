@@ -15,7 +15,7 @@ class HtmlServer():
         self.socket.listen()
         self.handlers = {}
 
-    def add_mapping(self, path, handler):
+    def add_mapping(self, path: str, handler):
         self.handlers[path] = handler
 
     def observe(self): 

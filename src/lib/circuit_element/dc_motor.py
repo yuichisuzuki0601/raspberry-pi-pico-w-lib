@@ -5,7 +5,8 @@ from board.pin_layout import to_gpio_number
 class Tb67h45:
     DEFAULT_SPEED = int(65536 * (50 / 100))
 
-    def __init__(self, pin1Number, pin2Number):
+    def __init__(self, name: str, pin1Number: int, pin2Number: int):
+        self.name = name
         self.pin1 = PWM(Pin(to_gpio_number(pin1Number), Pin.OUT), 60000)
         self.pin2 = PWM(Pin(to_gpio_number(pin2Number), Pin.OUT), 60000)
 

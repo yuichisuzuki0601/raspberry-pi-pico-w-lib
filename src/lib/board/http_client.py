@@ -6,12 +6,13 @@ from board.timestamp import jstNow
 class HttpClient:
     TIMEOUT = 3#[s]
 
-    def __init__(self, base_url):
+    def __init__(self, base_url: str):
         self.base_url = base_url
 
     def __noop(self, _): pass
 
-    def post(self, path, body, on_success, on_error = __noop):
+    # TODO body の型
+    def post(self, path: str, body, on_success, on_error = __noop):
         print(f'POST {self.base_url}/{path} {jstNow()}')
         try:
             response = urequests.post(

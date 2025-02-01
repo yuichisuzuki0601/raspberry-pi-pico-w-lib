@@ -2,12 +2,13 @@ from board.fs import read
 from board.html_server import HtmlServer
 from board.wlan import Wlan
 from circuit_element.led import Led
+from circuit_element.tact_switch import TactSwitch
 import config
 
 AP_SSID = 'pico'
 AP_PASSWORD = '00000000'
 
-def process(tact_switch_enter_wifi_setup_mode, onCheckPinNumber, onRequestPinNumber):
+def process(tact_switch_enter_wifi_setup_mode: TactSwitch, onCheckPinNumber: int, onRequestPinNumber: int):
     led_on_check = Led('led_on_check', onCheckPinNumber)
     led_on_request = Led('on_request', onRequestPinNumber)
 

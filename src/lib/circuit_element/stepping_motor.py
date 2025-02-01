@@ -9,7 +9,8 @@ class Uln2003a:
     REVERSE_EXCITATION_PATTERN =[[0 ,0 ,1, 1], [0, 0, 1, 0], [0, 1, 1, 0], [0, 1, 0, 0], [1, 1, 0, 0], [1, 0, 0, 0], [1, 0, 0, 1], [0, 0, 0, 1]]
     PULSE_INTERVAL = 1#[ms]
 
-    def __init__(self, pin1Number, pin2Number, pin3Number, pin4Number):
+    def __init__(self, name: str, pin1Number: int, pin2Number: int, pin3Number: int, pin4Number: int):
+        self.name = name
         self.pins = [
             Pin(to_gpio_number(pin1Number), Pin.OUT),
             Pin(to_gpio_number(pin2Number), Pin.OUT),

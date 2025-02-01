@@ -1,4 +1,4 @@
-def to_gpio_number(number):
+def to_gpio_number(number: int):
     return {
         1: 0,
         2: 1,

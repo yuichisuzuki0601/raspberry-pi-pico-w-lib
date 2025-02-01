@@ -6,12 +6,13 @@ from board.pin_layout import to_gpio_number
 class TactSwitch:
     OFF = 0
     ON = 1
-    BOUNCE_TIME_MS = 5000#[ms]#サーバーが国内ならもうちょっと短くても大丈夫そう
+    BOUNCE_TIME_MS = 1000#[ms]#サーバーが国内ならもうちょっと短くても大丈夫そう
 
-    def __init__(self, name, pinNumber):
+    def __init__(self, name: str, pinNumber: int, bounce_time_ms = BOUNCE_TIME_MS):
         self.lastInterruptTime = 0
         self.name = name
         self.pin = Pin(to_gpio_number(pinNumber), Pin.IN, Pin.PULL_UP)
+        self.bounce_time_ms = bounce_time_ms
 
     def status(self):
         return TactSwitch.ON if self.pin.value() == 0 else TactSwitch.OFF
@@ -21,7 +22,7 @@ class TactSwitch:
             # debouncing
             currentTime = ticks_ms()
             print(f'bounce: {self.name} {str(currentTime - self.lastInterruptTime)}')
-            if currentTime - self.lastInterruptTime > TactSwitch.BOUNCE_TIME_MS:
+            if currentTime - self.lastInterruptTime > self.bounce_time_ms:
                 print(f'{self.name} tact switch clicked.')
                 callback()
                 self.lastInterruptTime = currentTime

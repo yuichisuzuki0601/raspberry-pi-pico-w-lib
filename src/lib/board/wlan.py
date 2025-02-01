@@ -4,7 +4,7 @@ from utime import sleep
 class Wlan:
     CONNECT_MAX_WAIT = 10#[s]
 
-    def __init__(self, ssid, password):
+    def __init__(self, ssid: str, password: str):
         self.ssid = ssid
         self.password = password
         print(f'ssid: {ssid}, password: {password}')

@@ -2,7 +2,7 @@ from re import sub
 
 from lib.board.fs import read, overwrite
 
-def get(name):
+def get(name: str):
     dict = {}
 
     for line in read('.config').split('\n'):
@@ -11,5 +11,5 @@ def get(name):
 
     return dict[name] if name in dict else None
 
-def set(name, value):
+def set(name: str, value: str):
     overwrite('.config', sub(f'{name}=[^\n]*', f'{name}={value}', read('.config')))
