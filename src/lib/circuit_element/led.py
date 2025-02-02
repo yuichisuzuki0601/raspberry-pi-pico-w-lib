@@ -18,9 +18,9 @@ class Led:
     def off(self):
         self.pin.off()
 
-    def flash(self):
+    def flash(self, ms: int = FLASH_TIME_MS):
         self.on()
-        sleep_ms(Led.FLASH_TIME_MS)
+        sleep_ms(ms)
         self.off()
 
 class LedPico(Led):
