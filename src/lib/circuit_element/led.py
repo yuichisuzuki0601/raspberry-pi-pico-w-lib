@@ -23,6 +23,13 @@ class Led:
         sleep_ms(ms)
         self.off()
 
+    def blink(self, count: int = 1):
+        for _ in range(count):
+            self.on()
+            sleep_ms(200)
+            self.off()
+            sleep_ms(200)
+
 class LedPico(Led):
     def __init__(self):
         super().__init__('pico', 'LED')
