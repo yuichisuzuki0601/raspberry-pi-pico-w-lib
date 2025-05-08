@@ -1,4 +1,4 @@
-from board.fs import read
+from board.fs import read, read_as_binary
 from board.html_server import HtmlServer
 from board.wlan import Wlan
 from circuit_element.led import Led
@@ -16,6 +16,7 @@ def process(
     led_on_request = Led('on_request', on_request_pin_number)
 
     index_html = read('lib/public/wifi-setup/index.html')
+    favicon_ico = read_as_binary('lib/public/common/favicon.ico')
     style_css = read('lib/public/wifi-setup/style.css')
     common_js = read('lib/public/common/common.js')
     result_html = read('lib/public/wifi-setup/result.html')
@@ -34,7 +35,7 @@ def process(
         return html, True
 
     def handle_favion_ico(_):
-        return 'favicon.ico', False
+        return favicon_ico, False
 
     def handle_style_css(_):
         return style_css, False
