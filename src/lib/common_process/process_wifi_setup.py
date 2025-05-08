@@ -12,21 +12,12 @@ def process(tact_switch_enter_wifi_setup_mode: TactSwitch, onCheckPinNumber: int
     led_on_check = Led('led_on_check', onCheckPinNumber)
     led_on_request = Led('on_request', onRequestPinNumber)
 
-    style_css = read('lib/public/wifi-setup/style.css')
-    common_js = read('lib/public/wifi-setup/common.js')
     index_html = read('lib/public/wifi-setup/index.html')
+    style_css = read('lib/public/wifi-setup/style.css')
+    common_js = read('lib/public/common/common.js')
     result_html = read('lib/public/wifi-setup/result.html')
 
     html_server = HtmlServer()
-
-    def handle_favion_ico(_):
-        return 'favicon.ico', False
-
-    def handle_style_css(_):
-        return style_css, False
-
-    def handle_common_js(_):
-        return common_js, False
 
     def handle_index(_):
         led_on_request.flash()
@@ -38,9 +29,18 @@ def process(tact_switch_enter_wifi_setup_mode: TactSwitch, onCheckPinNumber: int
         )
         return html, True
 
+    def handle_favion_ico(_):
+        return 'favicon.ico', False
+
+    def handle_style_css(_):
+        return style_css, False
+
+    def handle_common_js(_):
+        return common_js, False
+
     def handle_save(request):
         led_on_request.flash()
-        data = request.split(' ')[1].replace('/wifi-setup/save?', '').split('&')
+        data = request.split(' ')[1].replace('/save?', '').split('&')
         wifi_ssid = data[0].replace('wifi-ssid=', '')
         wifi_password = data[1].replace('wifi-password=', '')
         config.set('wifi_ssid', wifi_ssid)
@@ -51,11 +51,11 @@ def process(tact_switch_enter_wifi_setup_mode: TactSwitch, onCheckPinNumber: int
         )
         return html, True
 
-    html_server.add_mapping('/favicon.ico', handle_favion_ico)
-    html_server.add_mapping('/wifi-setup/style.css', handle_style_css)
-    html_server.add_mapping('/wifi-setup/common.js', handle_common_js)
     html_server.add_mapping('/wifi-setup', handle_index)
-    html_server.add_mapping('/wifi-setup/save', handle_save)
+    html_server.add_mapping('/favicon.ico', handle_favion_ico)
+    html_server.add_mapping('/style.css', handle_style_css)
+    html_server.add_mapping('/common/common.js', handle_common_js)
+    html_server.add_mapping('/save', handle_save)
 
     tact_switch_enter_wifi_setup_mode.on_click(lambda: [
         led_on_check.flash(),

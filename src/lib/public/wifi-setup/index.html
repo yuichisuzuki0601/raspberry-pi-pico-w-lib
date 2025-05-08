@@ -2,8 +2,8 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-        <link rel="stylesheet" href="wifi-setup/style.css" />
-        <script src="wifi-setup/common.js"></script>
+        <link rel="stylesheet" href="style.css" />
+        <script src="../common/common.js"></script>
         <title>Wifi Setup</title>
     </head>
     <body>
@@ -44,7 +44,7 @@
         });
 
         $("#save").addEventListener("click", e => {
-            location.href = `wifi-setup/save?wifi-ssid=${getWifiSsid()}&wifi-password=${getWifiPassword()}`;
+            location.href = `save?wifi-ssid=${getWifiSsid()}&wifi-password=${getWifiPassword()}`;
         });
     </script>
 </html>
