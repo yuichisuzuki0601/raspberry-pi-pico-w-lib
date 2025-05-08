@@ -5,12 +5,15 @@ from circuit_element.led import Led
 from circuit_element.tact_switch import TactSwitch
 import config
 
-AP_SSID = 'pico'
-AP_PASSWORD = '00000000'
-
-def process(tact_switch_enter_wifi_setup_mode: TactSwitch, onCheckPinNumber: int, onRequestPinNumber: int):
-    led_on_check = Led('led_on_check', onCheckPinNumber)
-    led_on_request = Led('on_request', onRequestPinNumber)
+def process(
+        ap_ssid: str, 
+        ap_password: str, 
+        tact_switch_enter_wifi_setup_mode: TactSwitch, 
+        on_check_pin_number: int, 
+        on_request_pin_number: int,
+        title: str = 'Wifi Setup'):
+    led_on_check = Led('led_on_check', on_check_pin_number)
+    led_on_request = Led('on_request', on_request_pin_number)
 
     index_html = read('lib/public/wifi-setup/index.html')
     style_css = read('lib/public/wifi-setup/style.css')
@@ -24,6 +27,7 @@ def process(tact_switch_enter_wifi_setup_mode: TactSwitch, onCheckPinNumber: int
         wifi_ssid = config.get('wifi_ssid')
         wifi_password = config.get('wifi_password')
         html = (index_html
+                .replace('{title}', title)
                 .replace('{wifiSsid}', wifi_ssid or '')
                 .replace('{wifiPassword}', wifi_password or '')
         )
@@ -66,7 +70,7 @@ def process(tact_switch_enter_wifi_setup_mode: TactSwitch, onCheckPinNumber: int
 
     print('=== Wifi Setup Process Start ===')
 
-    Wlan(AP_SSID, AP_PASSWORD).launch_as_access_point()
+    Wlan(ap_ssid, ap_password).launch_as_access_point()
 
     try:
         while True:
