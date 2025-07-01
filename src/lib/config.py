@@ -2,7 +2,7 @@ from re import sub
 
 from lib.board.fs import read, overwrite
 
-def get(name: str):
+def get(name: str) -> str | None:
     dict = {}
 
     for line in read('.config').split('\n'):
