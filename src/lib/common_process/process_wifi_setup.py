@@ -17,7 +17,7 @@ def process(
 
     index_html = read('lib/public/wifi-setup/index.html')
     favicon_ico = read_as_binary('lib/public/common/favicon.ico')
-    style_css = read('lib/public/wifi-setup/style.css')
+    style_css = read('lib/public/common/style.css')
     common_js = read('lib/public/common/common.js')
     result_html = read('lib/public/wifi-setup/result.html')
 

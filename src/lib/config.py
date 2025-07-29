@@ -2,13 +2,17 @@ from re import sub
 
 from lib.board.fs import read, overwrite
 
-def get(name: str) -> str | None:
+def list() -> dict[str, str]:
     dict = {}
 
     for line in read('.config').split('\n'):
         pair = line.split('=')
         dict[pair[0]] = pair[1]
 
+    return dict
+
+def get(name: str) -> str | None:
+    dict = list()
     return dict[name] if name in dict else None
 
 def set(name: str, value: str):

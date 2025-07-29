@@ -23,6 +23,10 @@ body {
   height: 50px;
 }
 
+pre {
+  line-height: 2;
+}
+
 input {
   border: none;
   border-radius: 8px;
