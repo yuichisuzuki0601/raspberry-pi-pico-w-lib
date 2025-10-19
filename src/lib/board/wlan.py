@@ -10,23 +10,28 @@ class Wlan:
         print(f'ssid: {ssid}, password: {password}')
 
     def connect(self):
-        wlan = WLAN(STA_IF)
-        wlan.active(True)
-        wlan.connect(self.ssid, self.password)
+        self.wlan = WLAN(STA_IF)
+        self.wlan.active(True)
+        self.wlan.connect(self.ssid, self.password)
 
         max_wait = Wlan.CONNECT_MAX_WAIT
         while max_wait > 0:
-            if wlan.status() < STAT_IDLE or wlan.status() >= STAT_GOT_IP:
+            if self.wlan.status() < STAT_IDLE or self.wlan.status() >= STAT_GOT_IP:
                 break
             max_wait -= 1
             print('waiting for network connection...')
             sleep(1)
             
-        if wlan.status() == STAT_GOT_IP:
-            status = wlan.ifconfig()
+        if self.wlan.status() == STAT_GOT_IP:
+            status = self.wlan.ifconfig()
             print('network connected: ip = ' + status[0])
         else:
             raise Exception('ERR: network connection failed.')
+        
+        return self
+
+    def isconnected(self):
+        return self.wlan.isconnected()
 
     def launch_as_access_point(self):
         wlan = WLAN(AP_IF)

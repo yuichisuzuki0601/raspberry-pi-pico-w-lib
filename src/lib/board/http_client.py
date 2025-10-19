@@ -4,7 +4,7 @@ import urequests
 from board.timestamp import jstNow
 
 class HttpClient:
-    TIMEOUT = 3#[s]
+    TIMEOUT = 2#[s]
 
     def __init__(self, base_url: str):
         self.base_url = base_url

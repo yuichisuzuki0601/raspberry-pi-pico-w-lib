@@ -24,6 +24,6 @@ class TactSwitch:
             print(f'bounce: {self.name} {str(currentTime - self.lastInterruptTime)}')
             if currentTime - self.lastInterruptTime > self.bounce_time_ms:
                 print(f'{self.name} tact switch clicked.')
-                callback()
                 self.lastInterruptTime = currentTime
+                callback()
         self.pin.irq(trigger = Pin.IRQ_FALLING, handler = handler)
