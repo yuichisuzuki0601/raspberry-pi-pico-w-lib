@@ -1,5 +1,5 @@
 from board.fs import read, read_as_binary
-from board.html_server import HtmlServer
+from lib.board.http_server import HttpServer
 from board.wlan import Wlan
 from circuit_element.led import Led
 from circuit_element.tact_switch import TactSwitch
@@ -21,7 +21,7 @@ def process(
     common_js = read('lib/public/common/common.js')
     result_html = read('lib/public/wifi-setup/result.html')
 
-    html_server = HtmlServer()
+    http_server = HttpServer()
 
     def handle_index(_):
         led_on_request.flash()
@@ -32,16 +32,16 @@ def process(
                 .replace('{wifiSsid}', wifi_ssid or '')
                 .replace('{wifiPassword}', wifi_password or '')
         )
-        return html, True
+        return HttpServer.MIME_HTML, html
 
     def handle_favion_ico(_):
-        return favicon_ico, False
+        return HttpServer.MIME_ICO, favicon_ico
 
     def handle_style_css(_):
-        return style_css, False
+        return HttpServer.MIME_CSS, style_css
 
     def handle_common_js(_):
-        return common_js, False
+        return HttpServer.MIME_JS, common_js
 
     def handle_save(request):
         led_on_request.flash()
@@ -54,17 +54,22 @@ def process(
                 .replace('{wifiSsid}', wifi_ssid)
                 .replace('{wifiPassword}', wifi_password)
         )
-        return html, True
+        return HttpServer.MIME_HTML, html
 
-    html_server.add_mapping('/wifi-setup', handle_index)
-    html_server.add_mapping('/favicon.ico', handle_favion_ico)
-    html_server.add_mapping('/style.css', handle_style_css)
-    html_server.add_mapping('/common/common.js', handle_common_js)
-    html_server.add_mapping('/save', handle_save)
+    def handle_redirect(_):
+        redirect_header = 'HTTP/1.1 302 Found\r\nLocation: http://192.168.4.1/wifi-setup\r\n'
+        return HttpServer.MIME_HTML, redirect_header
+
+    http_server.add_mapping('/wifi-setup', handle_index)
+    http_server.add_mapping('/favicon.ico', handle_favion_ico)
+    http_server.add_mapping('/style.css', handle_style_css)
+    http_server.add_mapping('/common/common.js', handle_common_js)
+    http_server.add_mapping('/save', handle_save)
+    http_server.set_default_handler(handle_redirect)
 
     tact_switch_enter_wifi_setup_mode.on_click(lambda: [
         led_on_check.flash(),
-        print(f'wifi_ssid: {config.get("wifi_ssid")}, wifi_password: {config.get("wifi_password")}')
+        print(f'wifi_ssid: {config.get('wifi_ssid')}, wifi_password: {config.get('wifi_password')}')
     ])
 
     # =====
@@ -75,7 +80,7 @@ def process(
 
     try:
         while True:
-            html_server.observe()
+            http_server.observe()
     except BaseException as e:
-        html_server.close()
+        http_server.close()
         raise e

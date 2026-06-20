@@ -1,5 +1,5 @@
 from board.fs import read, read_as_binary
-from board.html_server import HtmlServer
+from lib.board.http_server import HttpServer
 from board.wlan import Wlan
 import config
 
@@ -12,25 +12,25 @@ def process(
     favicon_ico = read_as_binary('lib/public/common/favicon.ico')
     style_css = read('lib/public/common/style.css')
 
-    html_server = HtmlServer()
+    http_server = HttpServer()
 
     def handle_index(_):
-        configs = '\n'.join(f"{key}: {value}" for key, value in config.list().items())
+        configs = '\n'.join(f'{key}: {value}' for key, value in config.list().items())
         html = (index_html
                 .replace('{title}', title)
                 .replace('{configs}', str(configs) or '')
         )
-        return html, True
+        return HttpServer.MIME_HTML, html
 
     def handle_favion_ico(_):
-        return favicon_ico, False
+        return HttpServer.MIME_ICO, favicon_ico
 
     def handle_style_css(_):
-        return style_css, False
+        return HttpServer.MIME_CSS, style_css
 
-    html_server.add_mapping('/show-config', handle_index)
-    html_server.add_mapping('/favicon.ico', handle_favion_ico)
-    html_server.add_mapping('/style.css', handle_style_css)
+    http_server.add_mapping('/show-config', handle_index)
+    http_server.add_mapping('/favicon.ico', handle_favion_ico)
+    http_server.add_mapping('/style.css', handle_style_css)
 
     # =====
 
@@ -40,7 +40,7 @@ def process(
 
     try:
         while True:
-            html_server.observe()
+            http_server.observe()
     except BaseException as e:
-        html_server.close()
+        http_server.close()
         raise e

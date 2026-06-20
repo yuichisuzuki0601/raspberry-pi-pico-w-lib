@@ -39,3 +39,19 @@ class Wlan:
         wlan.ifconfig(('192.168.4.1', '255.255.255.0', '192.168.4.1', '192.168.4.1'))  
         wlan.active(True)
         print('\nIP Address: {}\nNet Mask: {}\nGateway: {}\nDNS: {}\n'.format(*wlan.ifconfig()))
+        # TODO キャプティブポータルを一旦問題切り分けのためにコメントアウトする
+        # def dns_thread():
+        #     ip = '192.168.4.1'
+        #     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        #     sock.bind(('0.0.0.0', 53))
+        #     while True:
+        #         try:
+        #             data, addr = sock.recvfrom(512)
+        #             packet = data[:2] + b'\x81\x80' + data[4:6] + data[4:6] + b'\x00\x00\x00\x00' + data[12:]
+        #             packet += b'\xc0\x0c\x00\x01\x00\x01\x00\x00\x00\x3c\x00\x04'
+        #             packet += bytes(map(int, ip.split('.')))
+        #             sock.sendto(packet, addr)
+        #         except:
+        #             continue
+        # _thread.start_new_thread(dns_thread, ())
+        # print("DNS Server started (Captive Portal mode)")
